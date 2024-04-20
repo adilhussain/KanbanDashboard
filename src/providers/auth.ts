@@ -7,12 +7,62 @@ import { API_URL, dataProvider } from "./data";
 /**
  * For demo purposes and to make it easier to test the app, you can use the following credentials:
  */
-export const authCredentials = {
+export let authCredentials = {
   email: "michael.scott@dundermifflin.com",
   password: "demodemo",
 };
 
 export const authProvider: AuthProvider = {
+  register: async ({ email, password }) => {
+    try {
+      const { data } = await dataProvider.custom({
+        url: API_URL,
+        method: "post",
+        headers: {},
+        meta: {
+          variables: {
+            email: email,
+            password: password
+          },
+          rawQuery: `
+        mutation Register($email: String!, $password: String!) {
+          register(registerInput: {
+            email: $email,
+            password: $password
+          }) {
+            id,
+            name,
+            email,
+            role,
+            createdAt,
+            updatedAt
+          }
+        }
+      `,
+        },
+      });
+
+      authCredentials = {
+        email: email,
+        password: password
+      }
+
+      return {
+        success: true,
+        redirectTo: "/login",
+      };
+    } catch (e) {
+      const error = e as Error;
+
+      return {
+        success: false,
+        error: {
+          message: "message" in error ? error.message : "Registering failed",
+          name: "name" in error ? error.name : "Invalid email or password",
+        },
+      };
+    }
+  },
   login: async ({ email }) => {
     try {
       const { data } = await dataProvider.custom({
@@ -20,7 +70,7 @@ export const authProvider: AuthProvider = {
         method: "post",
         headers: {},
         meta: {
-          variables: { email },
+          variables: { email: email },
           rawQuery: `
                 mutation Login($email: String!) {
                     login(loginInput: {
@@ -105,8 +155,8 @@ export const authProvider: AuthProvider = {
         method: "post",
         headers: accessToken
           ? {
-              Authorization: `Bearer ${accessToken}`,
-            }
+            Authorization: `Bearer ${accessToken}`,
+          }
           : {},
         meta: {
           rawQuery: `
