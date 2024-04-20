@@ -47,7 +47,8 @@
     "build": "tsc && refine build",
     "preview": "refine start",
     "refine": "refine",
-    "codegen": "graphql-codegen"
+    "codegen": "graphql-codegen",
+    "kaho": "tsc"
   },
   "browserslist": {
     "production": [

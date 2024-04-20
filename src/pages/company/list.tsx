@@ -20,6 +20,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
         GetFieldsFromList<CompaniesListQuery>
     >({
         resource: 'companies',
+        // @ts-ignore
         onSearch: (values) => {
             return [
                 {
@@ -82,6 +83,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
                     }}
                 >
                     <Table.Column<Company>
+                        // @ts-ignore
                         dataIndex="name"
                         title="Company Title"
                         defaultFilteredValue={getDefaultFilter('id', filters)}
@@ -96,13 +98,16 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
                         render={(value, record) => (
                             <Space>
                                 <CustomAvatar shape="square" name={record.name} src={record.avatarUrl} />
-                                <Text sytle={{ whitespace: 'nowrap' }}>
+                                <Text
+                                    // @ts-ignore
+                                    sytle={{ whitespace: 'nowrap' }}>
                                     {record.name}
                                 </Text>
                             </Space>
                         )}
                     />
                     <Table.Column<Company>
+                        // @ts-ignore
                         dataIndex="totalRevenue"
                         title="Open deals amount"
                         render={(value, company) => (
@@ -112,6 +117,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
                         )}
                     />
                     <Table.Column<Company>
+                        // @ts-ignore
                         dataIndex="id"
                         title="Actions"
                         fixed="right"

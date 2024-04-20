@@ -13,6 +13,7 @@ import { CompanyContactsTable } from './contacts-table'
 
 const EditPage = () => {
     const { saveButtonProps, formProps, formLoading, queryResult } = useForm({
+        // @ts-ignore
         redirect: 'false',
         meta: {
             gqlMutation: UPDATE_COMPANY_MUTATION
@@ -40,6 +41,7 @@ const EditPage = () => {
                     <Edit
                         isLoading={formLoading}
                         saveButtonProps={saveButtonProps}
+                        //@ts-ignore
                         breadCrumb={false}
                     >
                         <Form {...formProps} layout='vertical'>

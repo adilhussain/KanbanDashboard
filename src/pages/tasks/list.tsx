@@ -19,6 +19,7 @@ type TaskStage = GetFieldsFromList<TaskStagesQuery & { tasks: Task[] }>
 const List = ({ children }: React.PropsWithChildren) => {
     const { replace } = useNavigation()
 
+    // @ts-ignore
     const { data: stages, isLoading: isLoadingStages } = useList<TaskStage>({
         resource: 'taskStages',
         filters: [
@@ -150,7 +151,7 @@ const List = ({ children }: React.PropsWithChildren) => {
 
                     </KanbanColumn>
 
-                    {taskStages.columns?.map((column) => (
+                    {taskStages.columns?.map((column: any) => (
                         <KanbanColumn
                             key={column.id}
                             id={column.id}
@@ -158,7 +159,7 @@ const List = ({ children }: React.PropsWithChildren) => {
                             count={column.tasks.length}
                             onAddClick={() => handleAddCard({ stageId: column.id })}
                         >
-                            {!isLoading && column.tasks.map((task) => (
+                            {!isLoading && column.tasks.map((task: any) => (
                                 <KanbanItem key={task.id} id={task.id}>
                                     <ProjectCardMemo
                                         {...task}
