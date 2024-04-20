@@ -4,14 +4,17 @@ import KanbanColumn from './kanban/column'
 import KanbanItem from './kanban/item'
 import { useList, useNavigation, useUpdate } from '@refinedev/core'
 import { TASKS_QUERY, TASK_STAGES_QUERY } from '@/graphql/queries'
-import { TaskStage } from '@/graphql/schema.types'
 import { GetFieldsFromList } from '@refinedev/nestjs-query'
-import { TasksQuery } from '@/graphql/types'
 import { ProjectCardMemo } from './card'
 import { KanbanAddCardButton } from './kanban/add-card-button'
 import { KanbanColumnSkeleton, ProjectCardSkeleton } from '@/components'
 import { DragEndEvent } from '@dnd-kit/core'
 import { UPDATE_TASK_STAGE_MUTATION } from '@/graphql/mutations'
+import { TaskStagesQuery, TasksQuery } from '@/graphql/types'
+
+type Task = GetFieldsFromList<TasksQuery>
+type TaskStage = GetFieldsFromList<TaskStagesQuery & { tasks: Task[] }>
+
 
 const List = ({ children }: React.PropsWithChildren) => {
     const { replace } = useNavigation()
